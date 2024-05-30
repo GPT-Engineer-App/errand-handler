@@ -12,12 +12,14 @@ import {
   ListItem,
   Text,
   VStack,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 
 const Index = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const { colorMode } = useColorMode();
 
   const addTask = () => {
     if (newTask.trim() !== "") {
@@ -39,7 +41,7 @@ const Index = () => {
   };
 
   return (
-    <Container maxW="container.md" p={4}>
+    <Container maxW="container.md" p={4} bg={colorMode === "light" ? "white" : "gray.700"}>
       <Flex justify="center" mb={6}>
         <Heading as="h1" size="xl">
           Todo App
@@ -52,6 +54,8 @@ const Index = () => {
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && addTask()}
+            bg={colorMode === "light" ? "gray.100" : "gray.600"}
+            color={colorMode === "light" ? "black" : "white"}
           />
           <Button ml={2} onClick={addTask}>
             Add
@@ -65,11 +69,13 @@ const Index = () => {
               alignItems="center"
               justifyContent="space-between"
               p={2}
-              borderBottom="1px solid #e2e8f0"
+              borderBottom="1px solid"
+              borderColor={colorMode === "light" ? "gray.200" : "gray.500"}
             >
               <Checkbox
                 isChecked={task.completed}
                 onChange={() => toggleTaskCompletion(index)}
+                colorScheme={colorMode === "light" ? "blue" : "teal"}
               >
                 <Text as={task.completed ? "s" : ""}>{task.text}</Text>
               </Checkbox>
